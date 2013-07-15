@@ -2,22 +2,30 @@ package com.jojoagogogo.hello.test;
 
 import android.content.Intent;
 import android.test.ActivityUnitTestCase;
+import android.util.Log;
 
 import com.jojoagogogo.hello.MainActivity;
 
-@SuppressWarnings("rawtypes")
-public class MainActivityTest extends ActivityUnitTestCase {
+public class MainActivityTest extends ActivityUnitTestCase<MainActivity> {
 
-    @SuppressWarnings("unchecked")
+	MainActivity activity;
 	public MainActivityTest() {
-        super(MainActivity.class);
-    }
-
-    public void testSay(){
-        startActivity(new Intent(),null,null);
-        MainActivity activity = (MainActivity)getActivity();
-        activity.say();
-        assertEquals("Hello",activity.say());
-    }
-
+		super(MainActivity.class);
+	}
+	
+	public void testSay(){
+		activity = startActivity(new Intent(),null,null);
+		assertEquals("Hello", activity.say());
+	}
+	public void testClick(){
+		activity = startActivity(new Intent(),null,null);
+		activity.clickBtn1(null);
+		assertEquals(activity,this.getActivity());
+		
+		Intent intent = getStartedActivityIntent();
+		String message = intent.getStringExtra(MainActivity.MESSAGE);
+		Log.d("%%",message);
+		assertEquals("Message from MainActivity",message);
+		
+	}
 }
